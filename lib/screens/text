@@ -1,0 +1,84 @@
+Widget _buildProductCard(Product product) {
+  return Card(
+    margin: const EdgeInsets.all(4), // Reduced margin
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(8),
+    ),
+      child: InkWell(
+        onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ProductDetailScreen(product: product),
+            ),
+          );
+        },
+      child: Column(
+        mainAxisSize: MainAxisSize.min, // ← Crucial for compact layout
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // Modified image container:
+          AspectRatio(
+            aspectRatio: 1,
+            child: Container(
+              decoration: BoxDecoration(
+                color: AppTheme.accentColor.withOpacity(0.1),
+                borderRadius: BorderRadius.vertical(
+                  top: Radius.circular(8)),
+              ),
+              child: Center(
+                child: Icon(Icons.watch, 
+                  size: 40,
+                  color: AppTheme.primaryColor),
+              ),
+            ),
+          ),
+          // Text content...
+                      Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    product.name,
+                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  const SizedBox(height: 4),
+                  Row(
+                    children: [
+                      Text(
+                        '\$${product.price.toStringAsFixed(2)}',
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: AppTheme.primaryColor,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                      const Spacer(),
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.star,
+                            size: 14,
+                            color: AppTheme.goldAccent,
+                          ),
+                          const SizedBox(width: 2),
+                          Text(
+                            product.rating.toString(),
+                            style: Theme.of(context).textTheme.bodySmall,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
